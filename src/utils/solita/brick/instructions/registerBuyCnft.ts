@@ -11,6 +11,7 @@ import {
   RegisterBuyCnftParams,
   registerBuyCnftParamsBeet,
 } from '../types/RegisterBuyCnftParams.js'
+import { BRICK_PROGRAM_ID_PK } from '../../../../constants.js'
 
 /**
  * @category Instructions
@@ -77,8 +78,8 @@ export type RegisterBuyCnftInstructionAccounts = {
   compressionProgram: web3.PublicKey
   tokenMetadataProgram: web3.PublicKey
   signer: web3.PublicKey
-  seller?: web3.PublicKey
-  marketplaceAuth?: web3.PublicKey
+  seller?: web3.PublicKey | null
+  marketplaceAuth?: web3.PublicKey | null
   marketplace: web3.PublicKey
   product: web3.PublicKey
   paymentMint: web3.PublicKey
@@ -86,11 +87,11 @@ export type RegisterBuyCnftInstructionAccounts = {
   buyerTransferVault?: web3.PublicKey
   sellerTransferVault?: web3.PublicKey
   marketplaceTransferVault?: web3.PublicKey
-  bountyVault?: web3.PublicKey
-  sellerReward?: web3.PublicKey
-  sellerRewardVault?: web3.PublicKey
-  buyerReward?: web3.PublicKey
-  buyerRewardVault?: web3.PublicKey
+  bountyVault?: web3.PublicKey | null
+  sellerReward?: web3.PublicKey | null
+  sellerRewardVault?: web3.PublicKey | null
+  buyerReward?: web3.PublicKey | null
+  buyerRewardVault?: web3.PublicKey | null
   metadata: web3.PublicKey
   masterEdition: web3.PublicKey
   treeAuthority: web3.PublicKey
@@ -176,6 +177,12 @@ export function createRegisterBuyCnftInstruction(
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.marketplaceAuth != null) {
     if (accounts.seller == null) {
@@ -186,6 +193,12 @@ export function createRegisterBuyCnftInstruction(
     keys.push({
       pubkey: accounts.marketplaceAuth,
       isWritable: true,
+      isSigner: false,
+    })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
       isSigner: false,
     })
   }
@@ -210,147 +223,106 @@ export function createRegisterBuyCnftInstruction(
     isSigner: false,
   })
   if (accounts.buyerTransferVault != null) {
-    if (accounts.seller == null || accounts.marketplaceAuth == null) {
-      throw new Error(
-        "When providing 'buyerTransferVault' then 'accounts.seller', 'accounts.marketplaceAuth' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.buyerTransferVault,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.sellerTransferVault != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null
-    ) {
-      throw new Error(
-        "When providing 'sellerTransferVault' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.sellerTransferVault,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.marketplaceTransferVault != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null
-    ) {
-      throw new Error(
-        "When providing 'marketplaceTransferVault' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.marketplaceTransferVault,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.bountyVault != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null ||
-      accounts.marketplaceTransferVault == null
-    ) {
-      throw new Error(
-        "When providing 'bountyVault' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault', 'accounts.marketplaceTransferVault' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.bountyVault,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.sellerReward != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null ||
-      accounts.marketplaceTransferVault == null ||
-      accounts.bountyVault == null
-    ) {
-      throw new Error(
-        "When providing 'sellerReward' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault', 'accounts.marketplaceTransferVault', 'accounts.bountyVault' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.sellerReward,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.sellerRewardVault != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null ||
-      accounts.marketplaceTransferVault == null ||
-      accounts.bountyVault == null ||
-      accounts.sellerReward == null
-    ) {
-      throw new Error(
-        "When providing 'sellerRewardVault' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault', 'accounts.marketplaceTransferVault', 'accounts.bountyVault', 'accounts.sellerReward' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.sellerRewardVault,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.buyerReward != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null ||
-      accounts.marketplaceTransferVault == null ||
-      accounts.bountyVault == null ||
-      accounts.sellerReward == null ||
-      accounts.sellerRewardVault == null
-    ) {
-      throw new Error(
-        "When providing 'buyerReward' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault', 'accounts.marketplaceTransferVault', 'accounts.bountyVault', 'accounts.sellerReward', 'accounts.sellerRewardVault' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.buyerReward,
       isWritable: true,
       isSigner: false,
     })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
+      isSigner: false,
+    })
   }
   if (accounts.buyerRewardVault != null) {
-    if (
-      accounts.seller == null ||
-      accounts.marketplaceAuth == null ||
-      accounts.buyerTransferVault == null ||
-      accounts.sellerTransferVault == null ||
-      accounts.marketplaceTransferVault == null ||
-      accounts.bountyVault == null ||
-      accounts.sellerReward == null ||
-      accounts.sellerRewardVault == null ||
-      accounts.buyerReward == null
-    ) {
-      throw new Error(
-        "When providing 'buyerRewardVault' then 'accounts.seller', 'accounts.marketplaceAuth', 'accounts.buyerTransferVault', 'accounts.sellerTransferVault', 'accounts.marketplaceTransferVault', 'accounts.bountyVault', 'accounts.sellerReward', 'accounts.sellerRewardVault', 'accounts.buyerReward' need(s) to be provided as well.",
-      )
-    }
     keys.push({
       pubkey: accounts.buyerRewardVault,
       isWritable: true,
+      isSigner: false,
+    })
+  } else {
+    keys.push({
+      pubkey: BRICK_PROGRAM_ID_PK,
+      isWritable: false,
       isSigner: false,
     })
   }

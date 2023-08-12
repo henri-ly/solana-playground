@@ -1,6 +1,6 @@
 import { createMint, getAccount, getMint, getOrCreateAssociatedTokenAccount, mintTo } from "@solana/spl-token"
 import { Keypair, Connection, clusterApiUrl } from '@solana/web3.js'
-import { performAirdrop } from "./requestAirdrop.js"
+import { performAirdrop } from "./utils/requestAirdrop.js"
 
 export async function createTokenMint() {
     const payer = Keypair.generate()

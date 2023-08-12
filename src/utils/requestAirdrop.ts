@@ -6,8 +6,8 @@ export async function performAirdrop(connection: Connection, pubkey: PublicKey) 
 
     const latestBlockHash = await connection.getLatestBlockhash()
     await connection.confirmTransaction({
-        blockhash: latestBlockHash.blockhash,
-        lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-        signature: airdropSignature,
-      })
+      blockhash: latestBlockHash.blockhash,
+      lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+      signature: airdropSignature,
+    })
 }

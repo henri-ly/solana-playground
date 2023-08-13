@@ -66,7 +66,7 @@ async function getAccesses() {
             try {
                 const [context] = IX_DATA_LAYOUT[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
                 const { instructionDiscriminator, ...result } = context;
-                unitsPurchased =+ result.params.amount; 
+                unitsPurchased += result.params.amount; 
             } catch (e) {
                 console.error(e);
             }

@@ -63,20 +63,18 @@ async function getAccesses() {
 
             // Process the transaction: all assets, must have an unique signature
             const tx = await connection.getTransaction(response.data.result.items[0][0], {commitment: 'confirmed', maxSupportedTransactionVersion: 1});
-            if (tx && tx.meta && tx.meta.innerInstructions) {
-                try {
-                    const [context] = IX_DATA_LAYOUT[InstructionType.RegisterBuyCnft].deserialize(tx.transaction.message.compiledInstructions[1].data);
-                    const { instructionDiscriminator, ...result } = context;
-                    unitsPurchased =+ result.params.amount; 
-                } catch (e) {
-                    console.error(e);
-                }
+            try {
+                const [context] = IX_DATA_LAYOUT[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
+                const { instructionDiscriminator, ...result } = context;
+                unitsPurchased =+ result.params.amount; 
+            } catch (e) {
+                console.error(e);
             }
         } catch (error) {
             console.error('API Error:', error);
         }
-        console.log("Units purchased: " + unitsPurchased);
     }
+    console.log("Units purchased: " + unitsPurchased);
 }
 
 getAccesses();

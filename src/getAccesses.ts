@@ -65,7 +65,7 @@ async function getAccesses() {
             const tx = await connection.getTransaction(response.data.result.items[0][0], {commitment: 'confirmed', maxSupportedTransactionVersion: 1});
             try {
                 const [context] = IX_DATA_LAYOUT[InstructionType.RegisterBuyCnft].deserialize(tx?.transaction.message.compiledInstructions[1].data);
-                const { instructionDiscriminator, ...result } = context;
+                const { ...result } = context;
                 unitsPurchased += result.params.amount; 
             } catch (e) {
                 console.error(e);

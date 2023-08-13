@@ -116,7 +116,7 @@ async function initProductTree() {
     };
     const args: RegisterBuyCnftInstructionArgs = {
         params: {
-            amount: 5,
+            amount: 1000,
             name: "DATASET",
             symbol: "BRICK",
             uri: "test",

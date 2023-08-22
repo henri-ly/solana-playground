@@ -37,8 +37,9 @@ async function registerBuyCnft() {
     };
     const transaction = await createRegisterBuyCnftTransaction(connection, accounts, params);
     transaction.sign([signer]);
-    const txid = await connection.sendTransaction(transaction);
-    console.log(`https://explorer.solana.com/tx/${txid}?cluster=mainnet`);
+    console.log(transaction)
+    //const txid = await connection.sendTransaction(transaction);
+    //console.log(`https://explorer.solana.com/tx/${txid}?cluster=mainnet`);
 }
   
 registerBuyCnft();

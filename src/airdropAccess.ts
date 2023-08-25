@@ -30,7 +30,7 @@ async function airdropAccess() {
         ],
         BRICK_PROGRAM_ID_PK
     );
-    const receiver = new PublicKey("8zWzM8NVDrgqZMqcKhESsTumo1JTyhLjRDpBMZBCy394");
+    const receiver = new PublicKey("Esu1m9MSFD1EJKpYzNtxEC7ysGgmDVfP3E3DccxfsrWc");
     const receiverVault = getAssociatedTokenAddressSync(accessMint, receiver, false, TOKEN_2022_PROGRAM_ID);
     const accounts: AirdropAccessInstructionAccounts = {
         systemProgram: SystemProgram.programId,

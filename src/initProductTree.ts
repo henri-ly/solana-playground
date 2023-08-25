@@ -1,7 +1,7 @@
 import { InitProductTreeInstructionAccounts, InitProductTreeInstructionArgs, createInitProductTreeInstruction } from "./utils/solita/brick/index.js";
 import { Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
 import { BRICK_PROGRAM_ID_PK, BUBBLEGUM_PROGRAM_ID_PK, COMPRESSION_PROGRAM_ID_PK, METADATA_PROGRAM_ID_PK, NOOP_PROGRAM_ID_PK, USDC_MINT } from "./constants.js";
-import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync } from "@solana/spl-token";
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import { getConcurrentMerkleTreeAccountSize } from "@solana/spl-account-compression";
 import { v4 as uuid } from "uuid";
 import dotenv from 'dotenv';
@@ -13,7 +13,7 @@ async function initProductTree() {
     const rpc = process.env.rpc || '';
     if (rpc === '') throw new Error("RPC not found in environment variables.");
 
-    const secret = JSON.parse(process.env.secondSecret || '');
+    const secret = JSON.parse(process.env.thirdSecret || '');
     if (secret === '') throw new Error("Secret not found in environment variables.");
 
     const secretUint8Array = new Uint8Array(secret);
@@ -61,7 +61,6 @@ async function initProductTree() {
     const [treeAuthority] = PublicKey.findProgramAddressSync(
         [merkleTree.publicKey.toBuffer()], BUBBLEGUM_PROGRAM_ID_PK
     );
-    const accessVault = new PublicKey("Bv1NYHa5BBFwmcoyrxkWP6fmg142L72dCs1bckH9Wi7P");
     const accounts: InitProductTreeInstructionAccounts = {
         tokenMetadataProgram:  METADATA_PROGRAM_ID_PK,
         logWrapper: NOOP_PROGRAM_ID_PK,
@@ -77,7 +76,7 @@ async function initProductTree() {
         productMint: productMint,
         paymentMint: USDC_MINT,
         accessMint: accessMint,
-        accessVault: accessVault,
+        accessVault: (await getOrCreateAssociatedTokenAccount(connection, signer, accessMint, signer.publicKey, false, "finalized", {commitment: "finalized"}, TOKEN_2022_PROGRAM_ID)).address,
         productMintVault: getAssociatedTokenAddressSync(productMint, productPubkey, true),
         masterEdition: masterEdition,
         metadata: metadata,

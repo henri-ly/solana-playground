@@ -13,3 +13,5 @@ export const COMPRESSION_PROGRAM_ID_PK = new PublicKey("cmtDvXumGCrqC1Age74AVPhS
 
 export const FNET_MINT = new PublicKey("FNETmyYZNMTNcWCEssWS4ZJ6hZ1yu9Fu3n8uNmSRLzF5");
 export const USDC_MINT = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
+
+export const TENDER_PROGRAM_ID_PK = new PublicKey("BHQvQgoMZhCKuVeoVhsy8agZQYwMuvzXwrEYoEHHDgGJ");

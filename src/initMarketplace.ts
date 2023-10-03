@@ -1,4 +1,4 @@
-import { PaymentFeePayer } from "./utils/solita/brick/index.js";
+/*import { PaymentFeePayer } from "./utils/solita/brick/index.js";
 import { Connection, Keypair } from "@solana/web3.js";
 import { FNET_MINT } from "./constants.js";
 import dotenv from 'dotenv';
@@ -42,4 +42,4 @@ async function initMarketplace() {
     console.log(`https://explorer.solana.com/tx/${txid}?cluster=mainnet`);
 }
 
-initMarketplace();
+initMarketplace();*/

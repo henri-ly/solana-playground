@@ -1,31 +1,23 @@
-import { queryAccounts, queryEvents, querySales, AccountType } from "brick-protocol"
+import axios from "axios"
 
-export async function queryAccount() {
-    const filters = {
-        types: [AccountType.Marketplace]
+async function validateSignature() {
+    const startTime = Date.now();
+
+    const config = {
+        params: {
+            signature: '4RNsBz6Mf4EJPu61BSiJUJWdnsJ4uSMcjtd5PVUgPF3XXQWwDnJZVuifRdTz8Zq6wVy1yRTDG15zhD2G6vp8UKWc', 
+        }
+    };
+
+    try {
+        const response = await axios.get('http://localhost:8003/validateSignature', config);
+
+        const endTime = Date.now();
+        const timeTaken = endTime - startTime;
+        console.log(response)
+        console.log(`Time Taken: ${timeTaken} ms`);
+    } catch (error) {
+        console.error(error);
     }
-    const accounts = await queryAccounts('http://localhost:8080', filters)
-    accounts.map((account) => { console.log(account.data)} )
 }
-
-//queryAccount();
-
-export async function queryEvent() {
-    const filters = {
-        account: "5WnQLqDpc35PodFDBH6ZAWzDonvt4SF9R9wHq7mhMBG"
-    }
-    const events = await queryEvents('http://localhost:8080', filters)
-    events.map((events) => { console.log(events.info)} )
-}
-
-//queryEvent();
-
-async function querySale() {
-    const filters = {
-        seller: "rikiFB2VznT2izUT7UffzWCn1X4gNmGutX7XEqFdpRR",
-    }
-    const events = await querySales('http://localhost:8080', filters)
-    events.map((events) => { console.log(events.info)} )
-}
-
-querySale();
+validateSignature();

@@ -47,7 +47,7 @@ export const doRequestInstructionDiscriminator = [
 export function createDoRequestInstruction(
   accounts: DoRequestInstructionAccounts,
   programId = new web3.PublicKey(
-    'BHQvQgoMZhCKuVeoVhsy8agZQYwMuvzXwrEYoEHHDgGJ',
+    'E6E7kfSE21wnKrpvtEQsCj3XFnZyeXu6UjoLcjogqbLQ',
   ),
 ) {
   const [data] = doRequestStruct.serialize({

@@ -47,7 +47,7 @@ export const denyRequestInstructionDiscriminator = [
 export function createDenyRequestInstruction(
   accounts: DenyRequestInstructionAccounts,
   programId = new web3.PublicKey(
-    'BHQvQgoMZhCKuVeoVhsy8agZQYwMuvzXwrEYoEHHDgGJ',
+    'E6E7kfSE21wnKrpvtEQsCj3XFnZyeXu6UjoLcjogqbLQ',
   ),
 ) {
   const [data] = denyRequestStruct.serialize({

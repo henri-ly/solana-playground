@@ -1,6 +1,6 @@
-import { EditMarketplaceInstructionAccounts, EditMarketplaceInstructionArgs, PaymentFeePayer, createEditMarketplaceInstruction } from "./utils/solita/brick/index.js";
+import { EditMarketplaceInstructionAccounts, EditMarketplaceInstructionArgs, PaymentFeePayer, createEditMarketplaceInstruction } from "../utils/solita/brick/index.js";
 import { Connection, Keypair, PublicKey, TransactionMessage, VersionedTransaction } from "@solana/web3.js";
-import { BRICK_PROGRAM_ID_PK, FNET_MINT } from "./constants.js";
+import { BRICK_PROGRAM_ID_PK, FNET_MINT } from "../constants.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -29,6 +29,7 @@ async function editMarketplace() {
         rewardMint: FNET_MINT,
         discountMint: FNET_MINT,
     };
+
     const args: EditMarketplaceInstructionArgs = {
         params: {
             fee: 0,
@@ -39,7 +40,7 @@ async function editMarketplace() {
             deliverToken: false,
             transferable: false,
             chainCounter: false,
-            permissionless: false,
+            permissionless: true,
             rewardsEnabled: false,
             feePayer: PaymentFeePayer.Buyer,
         }

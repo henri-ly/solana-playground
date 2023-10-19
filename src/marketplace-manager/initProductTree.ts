@@ -1,11 +1,9 @@
-import { InitProductTreeInstructionAccounts, InitProductTreeInstructionArgs, createInitProductTreeInstruction } from "./utils/solita/brick/index.js";
-import { Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
-import { BRICK_PROGRAM_ID_PK, BUBBLEGUM_PROGRAM_ID_PK, COMPRESSION_PROGRAM_ID_PK, METADATA_PROGRAM_ID_PK, NOOP_PROGRAM_ID_PK, USDC_MINT } from "./constants.js";
-import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
-import { getConcurrentMerkleTreeAccountSize } from "@solana/spl-account-compression";
+import { createInitProductTreeTransaction } from "../../../brick/ts-sdk/dist/index.js";
+import { Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram } from "@solana/web3.js";
+import { BRICK_PROGRAM_ID_PK, BUBBLEGUM_PROGRAM_ID_PK, COMPRESSION_PROGRAM_ID_PK, METADATA_PROGRAM_ID_PK, NOOP_PROGRAM_ID_PK, USDC_MINT } from "../constants.js";
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { v4 as uuid } from "uuid";
 import dotenv from 'dotenv';
-import BN from "bn.js";
 
 dotenv.config();
 
@@ -21,7 +19,7 @@ async function initProductTree() {
     const connection: Connection = new Connection(rpc);
 
     const marketplacePubkey = new PublicKey('5WnQLqDpc35PodFDBH6ZAWzDonvt4SF9R9wHq7mhMBG');
-    const productPrice = new BN(10000);
+    const productPrice = 1000;
     const [firstId, secondId] = getSplitId(uuid());
     const accessMint = new PublicKey("HtMwVvqCCbaqkLErWVgYPJbTwpRbe9WYzmWA4GQKbpXP");
     const [productPubkey] = PublicKey.findProgramAddressSync(
@@ -61,7 +59,7 @@ async function initProductTree() {
     const [treeAuthority] = PublicKey.findProgramAddressSync(
         [merkleTree.publicKey.toBuffer()], BUBBLEGUM_PROGRAM_ID_PK
     );
-    const accounts: InitProductTreeInstructionAccounts = {
+    const accounts = {
         tokenMetadataProgram:  METADATA_PROGRAM_ID_PK,
         logWrapper: NOOP_PROGRAM_ID_PK,
         systemProgram: SystemProgram.programId,
@@ -76,45 +74,28 @@ async function initProductTree() {
         productMint: productMint,
         paymentMint: USDC_MINT,
         accessMint: accessMint,
-        accessVault: (await getOrCreateAssociatedTokenAccount(connection, signer, accessMint, signer.publicKey, false, "finalized", {commitment: "finalized"}, TOKEN_2022_PROGRAM_ID)).address,
+        accessVault: null,
         productMintVault: getAssociatedTokenAddressSync(productMint, productPubkey, true),
         masterEdition: masterEdition,
         metadata: metadata,
         merkleTree: merkleTree.publicKey,
         treeAuthority: treeAuthority,
     };
-    const [height, buffer, canopy] = [5, 8, 0];
-    const space = getConcurrentMerkleTreeAccountSize(height, buffer, canopy);
-    const cost = await connection.getMinimumBalanceForRentExemption(space);
-    
-    const args: InitProductTreeInstructionArgs = {
-        params: {
-            firstId: [...firstId],
-            secondId: [...secondId],
-            productPrice: productPrice,
-            maxDepth: height,
-            maxBufferSize: buffer,
-            name: "DATASET",
-            metadataUrl: "test",
-            feeBasisPoints: 0,
-        }
+    const [height, buffer, canopy] = [5, 8, 0];    
+    const params = {
+        id: uuid(),
+        feeBasisPoints: 0,
+        height,
+        buffer,
+        canopy,
+        productPrice: productPrice,
+        name: "DATASET",
+        metadataUrl: "test",
     };
-    const ix = createInitProductTreeInstruction(accounts, args);
-    let transaction = new Transaction().add(
-        SystemProgram.createAccount({
-            fromPubkey: signer.publicKey,
-            newAccountPubkey: merkleTree.publicKey,
-            lamports: cost,
-            space: space,
-            programId: COMPRESSION_PROGRAM_ID_PK,
-        }),
-    ).add(ix);
-    let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
-    transaction.recentBlockhash = blockhash;
-    transaction.feePayer = signer.publicKey;
-    transaction.partialSign(signer, merkleTree);
-
-    await connection.sendRawTransaction(transaction.serialize())
+    const tx = await createInitProductTreeTransaction(connection, accounts, params);
+    tx.sign([signer]);
+    const sig = await connection.sendRawTransaction(tx.serialize())
+    console.log(sig)
 }
 
 function getSplitId(str: string): [Buffer, Buffer]{

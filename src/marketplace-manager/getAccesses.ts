@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { IX_DATA_LAYOUT, InstructionType } from './utils/solita/brick/instructions.js';
+import { IX_DATA_LAYOUT, InstructionType } from '../utils/solita/brick/instructions.js';
 dotenv.config();
 
 async function getAccesses() {

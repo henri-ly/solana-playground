@@ -71,7 +71,7 @@ export const initCouncilMemberInstructionDiscriminator = [
 export function createInitCouncilMemberInstruction(
   accounts: InitCouncilMemberInstructionAccounts,
   programId = new web3.PublicKey(
-    'BHQvQgoMZhCKuVeoVhsy8agZQYwMuvzXwrEYoEHHDgGJ',
+    'E6E7kfSE21wnKrpvtEQsCj3XFnZyeXu6UjoLcjogqbLQ',
   ),
 ) {
   const [data] = initCouncilMemberStruct.serialize({

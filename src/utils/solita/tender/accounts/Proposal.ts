@@ -99,7 +99,7 @@ export class Proposal implements ProposalArgs {
    */
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey(
-      'BHQvQgoMZhCKuVeoVhsy8agZQYwMuvzXwrEYoEHHDgGJ',
+      'E6E7kfSE21wnKrpvtEQsCj3XFnZyeXu6UjoLcjogqbLQ',
     ),
   ) {
     return beetSolana.GpaBuilder.fromStruct(programId, proposalBeet)

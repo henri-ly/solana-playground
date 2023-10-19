@@ -1,7 +1,7 @@
-import { USDC_MINT } from "./constants.js";
+import { USDC_MINT } from "../constants.js";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import dotenv from 'dotenv';
-import { createRegisterBuyCnftTransaction } from "../../brick/ts-sdk/dist/index.js"
+import { createRegisterBuyCnftTransaction } from "../../../brick/ts-sdk/dist/index.js"
 
 dotenv.config();
 

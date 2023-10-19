@@ -1,6 +1,6 @@
 import { ComputeBudgetProgram, Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
 import dotenv from 'dotenv';
-import { createInitNetworkInstruction } from "./utils/solita/tender/instructions/initNetwork.js";
+//import { createInitNetworkInstruction } from "./utils/solita/tender/instructions/initNetwork.js";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { METADATA_PROGRAM_ID_PK, TENDER_PROGRAM_ID_PK } from "./constants.js";
 import { createInitRolesInstruction } from "./utils/solita/tender/instructions/initRoles.js";
@@ -134,7 +134,7 @@ async function requestAccess() {
     }
     console.log(networkAccounts)
 
-    const proposalCollectionUri: string = 'https://shdw-drive.genesysgo.net/E8yeCMMgZCimwwh16LFMbWF4VDfQSzGWLcbXqFnrXMT6/DNzw56KHzDVqmfeKGSG8xut9JDTAUBZD64idjo2G9oJf.json?ts=1689256340';
+    /*const proposalCollectionUri: string = 'https://shdw-drive.genesysgo.net/E8yeCMMgZCimwwh16LFMbWF4VDfQSzGWLcbXqFnrXMT6/DNzw56KHzDVqmfeKGSG8xut9JDTAUBZD64idjo2G9oJf.json?ts=1689256340';
     const networkIx = createInitNetworkInstruction(networkAccounts, { proposalCollectionUri });
     const networkTx = new Transaction().add(ComputeBudgetProgram.setComputeUnitLimit({ units: 250000 })).add(networkIx);
     let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
@@ -142,7 +142,7 @@ async function requestAccess() {
     networkTx.feePayer = signer.publicKey;
     networkTx.partialSign(signer);
 
-    await connection.sendRawTransaction(networkTx.serialize());
+    await connection.sendRawTransaction(networkTx.serialize());*/
 
     const rolesAccounts = {
         signer: signer.publicKey,
@@ -174,7 +174,7 @@ async function requestAccess() {
 
     const rolesIx = createInitRolesInstruction(rolesAccounts, rolesParams);
     const rolesTx = new Transaction().add(ComputeBudgetProgram.setComputeUnitLimit({ units: 350000 })).add(rolesIx);
-    blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
+    let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
     rolesTx.recentBlockhash = blockhash;
     rolesTx.feePayer = signer.publicKey;
     rolesTx.partialSign(signer);

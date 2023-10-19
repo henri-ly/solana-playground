@@ -1,6 +1,5 @@
-/*import { PaymentFeePayer } from "./utils/solita/brick/index.js";
 import { Connection, Keypair } from "@solana/web3.js";
-import { FNET_MINT } from "./constants.js";
+import { FNET_MINT } from "../constants.js";
 import dotenv from 'dotenv';
 import { createInitMarketplaceTransaction } from "brick-protocol";
 dotenv.config();
@@ -32,7 +31,7 @@ async function initMarketplace() {
         chainCounter: false,
         permissionless: false,
         rewardsEnabled: false,
-        feePayer: PaymentFeePayer.Buyer,
+        feePayer: 0,
     };
 
     const transaction = await createInitMarketplaceTransaction(connection, accounts, args);
@@ -42,4 +41,4 @@ async function initMarketplace() {
     console.log(`https://explorer.solana.com/tx/${txid}?cluster=mainnet`);
 }
 
-initMarketplace();*/
+initMarketplace();

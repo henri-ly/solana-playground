@@ -1,7 +1,7 @@
-import { InitProductInstructionAccounts, InitProductInstructionArgs, createInitProductInstruction } from "./utils/solita/brick/index.js";
+import { InitProductInstructionAccounts, InitProductInstructionArgs, createInitProductInstruction } from "../utils/solita/brick/index.js";
 import { Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
 import { TOKEN_2022_PROGRAM_ID, getAssociatedTokenAddressSync } from "@solana/spl-token";
-import { BRICK_PROGRAM_ID_PK, USDC_MINT } from "./constants.js";
+import { BRICK_PROGRAM_ID_PK, USDC_MINT } from "../constants.js";
 import { v4 as uuid } from "uuid";
 import dotenv from 'dotenv';
 import BN from "bn.js";

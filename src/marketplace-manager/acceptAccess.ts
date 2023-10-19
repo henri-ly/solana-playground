@@ -1,10 +1,11 @@
-import { RequestAccessInstructionAccounts, createRequestAccessInstruction } from "./utils/solita/brick/index.js";
+import { AcceptAccessInstructionAccounts, createAcceptAccessInstruction } from "../utils/solita/brick/index.js";
 import { Connection, Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
-import { BRICK_PROGRAM_ID_PK } from "./constants.js";
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, getAssociatedTokenAddressSync } from "@solana/spl-token";
+import { BRICK_PROGRAM_ID_PK } from "../constants.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-async function requestAccess() {
+async function acceptAccess() {
     const rpc = process.env.rpc || '';
     if (rpc === '') throw new Error("RPC not found in environment variables.");
 
@@ -22,6 +23,13 @@ async function requestAccess() {
         ],
         BRICK_PROGRAM_ID_PK
     );
+    const [accessMint] = PublicKey.findProgramAddressSync(
+        [
+          Buffer.from("access_mint", "utf-8"),
+          marketplacePubkey.toBuffer(),
+        ],
+        BRICK_PROGRAM_ID_PK
+    );
     const [request] = PublicKey.findProgramAddressSync(
         [
           Buffer.from("request", "utf-8"),
@@ -30,14 +38,20 @@ async function requestAccess() {
         ],
         BRICK_PROGRAM_ID_PK
     );
-    const accounts: RequestAccessInstructionAccounts = {
+    const receiverVault = getAssociatedTokenAddressSync(accessMint, signer.publicKey, false, TOKEN_2022_PROGRAM_ID);
+    const accounts: AcceptAccessInstructionAccounts = {
         systemProgram: SystemProgram.programId,
+        tokenProgram2022: TOKEN_2022_PROGRAM_ID,
+        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
         rent: SYSVAR_RENT_PUBKEY,
         signer: signer.publicKey,
+        receiver: signer.publicKey,
         marketplace: marketplacePubkey,
         request: request,
+        accessMint: accessMint,
+        accessVault: receiverVault,
     };
-    const ix = createRequestAccessInstruction(accounts);
+    const ix = createAcceptAccessInstruction(accounts);
     let transaction = new Transaction().add(ix);
     let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
     transaction.recentBlockhash = blockhash;
@@ -47,4 +61,4 @@ async function requestAccess() {
     await connection.sendRawTransaction(transaction.serialize());
 }
 
-requestAccess();
+acceptAccess();

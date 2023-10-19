@@ -1,0 +1,651 @@
+{
+  "version": "0.1.0",
+  "name": "product_manager",
+  "instructions": [
+    {
+      "name": "initProduct",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "escrowPay",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "seller",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrowVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "transferVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "productAmount",
+          "type": "u64"
+        },
+        {
+          "name": "expireTime",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "directPay",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "seller",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "to",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "productAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "accept",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "buyer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrowVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "transferVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deny",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "buyer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrowVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "transferVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "recoverFunds",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "seller",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrowVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "transferVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Product",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "paymentMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Escrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "docs": [
+              "depending on the blocktime the authority is the buyer or the seller",
+              "seller can accept or deny propossal before expire time",
+              "buyer can recover funds after expire time"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "receiver",
+            "type": "publicKey"
+          },
+          {
+            "name": "product",
+            "type": "publicKey"
+          },
+          {
+            "name": "productAmount",
+            "type": "u64"
+          },
+          {
+            "name": "expireTime",
+            "type": "i64"
+          },
+          {
+            "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "SellerResponse",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Accept"
+          },
+          {
+            "name": "Deny"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "ProductEvent",
+      "fields": [
+        {
+          "name": "address",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "seller",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "price",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "blocktime",
+          "type": "i64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "EscrowEvent",
+      "fields": [
+        {
+          "name": "address",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "vault",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "payer",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "receiver",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "productAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "expireTime",
+          "type": "i64",
+          "index": false
+        },
+        {
+          "name": "blocktime",
+          "type": "i64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "DirectPayEvent",
+      "fields": [
+        {
+          "name": "mint",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "payer",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "receiver",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "productAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "blocktime",
+          "type": "i64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "SellerResponseEvent",
+      "fields": [
+        {
+          "name": "response",
+          "type": {
+            "defined": "SellerResponse"
+          },
+          "index": false
+        },
+        {
+          "name": "escrow",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "payer",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "receiver",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "productAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "blocktime",
+          "type": "i64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "RecoverEvent",
+      "fields": [
+        {
+          "name": "escrow",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "seller",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "buyer",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "IncorrectAuthority",
+      "msg": "Wrong authority"
+    },
+    {
+      "code": 6001,
+      "name": "IncorrectOwner",
+      "msg": "Wrong owner on a token account"
+    },
+    {
+      "code": 6002,
+      "name": "IncorrectMint",
+      "msg": "Wrong mint on a token account"
+    },
+    {
+      "code": 6003,
+      "name": "IncorrectProduct",
+      "msg": "Wrong product on a escrow"
+    },
+    {
+      "code": 6004,
+      "name": "TimeExpired",
+      "msg": "Your time to accept or deny propossal has expired"
+    },
+    {
+      "code": 6005,
+      "name": "CannotRecoverYet",
+      "msg": "Payment recovery is not allowed at this time"
+    }
+  ],
+  "metadata": {
+    "address": "ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU"
+  }
+}

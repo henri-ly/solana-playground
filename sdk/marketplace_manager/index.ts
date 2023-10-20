@@ -1,21 +1,6 @@
-import { PublicKey } from '@solana/web3.js'
-export * from './accounts'
-export * from './errors'
-export * from './instructions'
-export * from './types'
-
-/**
- * Program address
- *
- * @category constants
- * @category generated
- */
-export const PROGRAM_ADDRESS = 'brick5uEiJqSkfuAvMtKmq7kiuEVmbjVMiigyV51GRF'
-
-/**
- * Program public key
- *
- * @category constants
- * @category generated
- */
-export const PROGRAM_ID = new PublicKey(PROGRAM_ADDRESS)
+import { MarketplaceManagerParser } from './parser/index.js'
+import { MarketplaceManagerTransactionBuilder } from './transaction-builder/index.js'
+export class MarketplaceManager {
+  public parser = MarketplaceManagerParser
+  public transacionBuilder = MarketplaceManagerTransactionBuilder
+}

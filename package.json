@@ -7,14 +7,15 @@
   "types": "dist/index.d.js",
   "type": "module",
   "scripts": {
-    "start": "npm i && npm run build",
+    "start": "npm run prepare && npm run build",
     "build": "npm run build:ts",
-    "build:ts": "tsc -p ./tsconfig.json",
+    "build:ts": "tsc",
+    "prepare": "npm install",
     "clean:ts": "rm -rf ./dist",
     "clean:all": "rm -rf ./node_modules && rm -rf ./dist && rm -rf package-lock.json"
   },
   "devDependencies": {
-    "@types/node": "^20.8.7",
+    "@types/node": "^16.18.59",
     "@types/uuid": "^9.0.6",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
@@ -27,13 +28,14 @@
     "@metaplex-foundation/solita": "^0.20.0",
     "@solana/spl-account-compression": "^0.2.0",
     "@solana/spl-token": "^0.3.8",
-    "@solana/web3.js": "^1.87.1",
+    "@solana/web3.js": "^1.87.2",
     "aleph-sdk-ts": "^3.7.0",
     "axios": "^1.5.1",
     "bn.js": "^5.2.1",
     "brick-protocol": "^0.0.24",
     "bs58": "^5.0.0",
     "dotenv": "^16.3.1",
+    "prettier": "^3.0.3",
     "uuid": "^9.0.1"
   }
 }

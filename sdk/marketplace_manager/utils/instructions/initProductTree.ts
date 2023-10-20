@@ -92,10 +92,8 @@ export const initProductTreeInstructionDiscriminator = [
 /**
  * Creates a _InitProductTree_ instruction.
  *
- * Optional accounts that are not provided will be omitted from the accounts
- * array passed with the instruction.
- * An optional account that is set cannot follow an optional account that is unset.
- * Otherwise an Error is raised.
+ * Optional accounts that are not provided default to the program ID since
+ * this was indicated in the IDL from which this instruction was generated.
  *
  * @param accounts that will be accessed while the instruction is processed
  * @param args to provide as instruction data to the program
@@ -139,92 +137,82 @@ export function createInitProductTreeInstruction(
       isWritable: false,
       isSigner: false,
     },
+    {
+      pubkey: accounts.accessMint ?? programId,
+      isWritable: accounts.accessMint != null,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.productMintVault,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.accessVault ?? programId,
+      isWritable: accounts.accessVault != null,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.masterEdition,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.metadata,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.merkleTree,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.treeAuthority,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.rent ?? web3.SYSVAR_RENT_PUBKEY,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.tokenMetadataProgram,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.logWrapper,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.bubblegumProgram,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.compressionProgram,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.tokenProgram ?? splToken.TOKEN_PROGRAM_ID,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.associatedTokenProgram,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
+      isWritable: false,
+      isSigner: false,
+    },
   ]
-
-  if (accounts.accessMint != null) {
-    keys.push({
-      pubkey: accounts.accessMint,
-      isWritable: true,
-      isSigner: false,
-    })
-  }
-  keys.push({
-    pubkey: accounts.productMintVault,
-    isWritable: true,
-    isSigner: false,
-  })
-  if (accounts.accessVault != null) {
-    if (accounts.accessMint == null) {
-      throw new Error(
-        "When providing 'accessVault' then 'accounts.accessMint' need(s) to be provided as well."
-      )
-    }
-    keys.push({
-      pubkey: accounts.accessVault,
-      isWritable: true,
-      isSigner: false,
-    })
-  }
-  keys.push({
-    pubkey: accounts.masterEdition,
-    isWritable: true,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.metadata,
-    isWritable: true,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.merkleTree,
-    isWritable: true,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.treeAuthority,
-    isWritable: true,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.rent ?? web3.SYSVAR_RENT_PUBKEY,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.tokenMetadataProgram,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.logWrapper,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.bubblegumProgram,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.compressionProgram,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.tokenProgram ?? splToken.TOKEN_PROGRAM_ID,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.associatedTokenProgram,
-    isWritable: false,
-    isSigner: false,
-  })
-  keys.push({
-    pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
-    isWritable: false,
-    isSigner: false,
-  })
 
   if (accounts.anchorRemainingAccounts != null) {
     for (const acc of accounts.anchorRemainingAccounts) {

@@ -6,15 +6,14 @@ import {
 import {
   InitProductInstructionAccounts,
   createInitProductInstruction,
+  InitProductInstructionArgs,
 } from '../utils/instructions/initProduct'
-import { InitProductParams } from '../utils/types'
 
 export async function createInitProductTransaction(
   connection: Connection,
   accounts: InitProductInstructionAccounts,
-  params: InitProductParams,
+  args: InitProductInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const args = { params }
   const ix = createInitProductInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({

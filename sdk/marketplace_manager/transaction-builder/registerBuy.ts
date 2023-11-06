@@ -6,14 +6,15 @@ import {
 import {
   RegisterBuyInstructionAccounts,
   createRegisterBuyInstruction,
+  RegisterBuyInstructionArgs,
 } from '../utils/instructions/registerBuy'
 
 export async function createRegisterBuyTransaction(
   connection: Connection,
   accounts: RegisterBuyInstructionAccounts,
-  amount: number,
+  args: RegisterBuyInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const ix = createRegisterBuyInstruction(accounts, { amount })
+  const ix = createRegisterBuyInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({
     payerKey: accounts.signer,

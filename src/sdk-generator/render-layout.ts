@@ -26,12 +26,17 @@ ${accounts.map(account => `   ${account.name} = '${account.name}',`).join('\n')}
 }
 
 export function getAccountType(data: Buffer): AccountType | undefined {
-  const discriminator = Buffer.from(data.buffer, data.byteOffset, 8);
-  return ACCOUNT_DISCRIMINATOR[discriminator.toString('ascii')]
+  const discriminator: string = Buffer.from(data.buffer, data.byteOffset, 8).toString('ascii');
+  return ACCOUNT_DISCRIMINATOR[discriminator];
 }
 
-export const ACCOUNT_DISCRIMINATOR: Record<AccountType, Buffer> = {
-${accounts.map(account => `   [AccountType.${account.name}]: Buffer.from(${account.name.charAt(0).toLowerCase().concat(account.name.slice(1))}Discriminator),`).join('\n')}
+export const ACCOUNT_DISCRIMINATOR: Record<string, AccountType> = {
+${accounts
+  .map(
+    (account) =>
+      `[Buffer.from(${account.name.charAt(0).toLowerCase() + account.name.slice(1)}Discriminator).toString('ascii')]: AccountType.${account.name},`
+  )
+  .join('\n')}
 }
 
 export const ACCOUNTS_DATA_LAYOUT: Record<

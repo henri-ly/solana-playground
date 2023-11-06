@@ -42,6 +42,7 @@ export const directPayStruct = new beet.BeetArgsStruct<
  * @property [_writable_] from
  * @property [_writable_] to
  * @property [] paymentMint
+ * @property [] associatedTokenProgram
  * @category Instructions
  * @category DirectPay
  * @category generated
@@ -53,7 +54,10 @@ export type DirectPayInstructionAccounts = {
   from: web3.PublicKey
   to: web3.PublicKey
   paymentMint: web3.PublicKey
+  rent?: web3.PublicKey
   tokenProgram?: web3.PublicKey
+  associatedTokenProgram: web3.PublicKey
+  systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
@@ -74,7 +78,7 @@ export const directPayInstructionDiscriminator = [
 export function createDirectPayInstruction(
   accounts: DirectPayInstructionAccounts,
   args: DirectPayInstructionArgs,
-  programId = new web3.PublicKey('ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU')
+  programId = new web3.PublicKey('6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa')
 ) {
   const [data] = directPayStruct.serialize({
     instructionDiscriminator: directPayInstructionDiscriminator,
@@ -112,7 +116,22 @@ export function createDirectPayInstruction(
       isSigner: false,
     },
     {
+      pubkey: accounts.rent ?? web3.SYSVAR_RENT_PUBKEY,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
       pubkey: accounts.tokenProgram ?? splToken.TOKEN_PROGRAM_ID,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.associatedTokenProgram,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
       isWritable: false,
       isSigner: false,
     },

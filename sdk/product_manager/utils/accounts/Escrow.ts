@@ -98,7 +98,7 @@ export class Escrow implements EscrowArgs {
    */
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey(
-      'ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU'
+      '6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa'
     )
   ) {
     return beetSolana.GpaBuilder.fromStruct(programId, escrowBeet)

@@ -6,17 +6,15 @@ import {
 import {
   EscrowPayInstructionAccounts,
   createEscrowPayInstruction,
+  EscrowPayInstructionArgs,
 } from '../utils/instructions/escrowPay'
-
-import BN from 'bn.js'
 
 export async function createEscrowPayTransaction(
   connection: Connection,
   accounts: EscrowPayInstructionAccounts,
-  productAmount: BN,
-  expireTime: BN,
+  args: EscrowPayInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const ix = createEscrowPayInstruction(accounts, { productAmount })
+  const ix = createEscrowPayInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({
     payerKey: accounts.signer,

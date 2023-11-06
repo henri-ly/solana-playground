@@ -69,6 +69,7 @@ function parseDirectPay(
     from: accountsKeys[accounts.indexOf('from')],
     to: accountsKeys[accounts.indexOf('to')],
     paymentMint: accountsKeys[accounts.indexOf('paymentMint')],
+    rent: accountsKeys[accounts.indexOf('rent')],
     ...result,
   }
 }
@@ -157,6 +158,7 @@ export type DirectPayInfo = {
   from: string
   to: string
   paymentMint: string
+  rent: string
   productAmount: BN
 }
 export type AcceptInfo = {

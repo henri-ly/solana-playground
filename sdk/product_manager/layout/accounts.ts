@@ -11,13 +11,17 @@ export enum AccountType {
 }
 
 export function getAccountType(data: Buffer): AccountType | undefined {
-  const discriminator = Buffer.from(data.buffer, data.byteOffset, 8)
-  return ACCOUNT_DISCRIMINATOR[discriminator.toString('ascii')]
+  const discriminator: string = Buffer.from(
+    data.buffer,
+    data.byteOffset,
+    8,
+  ).toString('ascii')
+  return ACCOUNT_DISCRIMINATOR[discriminator]
 }
 
-export const ACCOUNT_DISCRIMINATOR: Record<AccountType, Buffer> = {
-  [AccountType.Product]: Buffer.from(productDiscriminator),
-  [AccountType.Escrow]: Buffer.from(escrowDiscriminator),
+export const ACCOUNT_DISCRIMINATOR: Record<string, AccountType> = {
+  [Buffer.from(productDiscriminator).toString('ascii')]: AccountType.Product,
+  [Buffer.from(escrowDiscriminator).toString('ascii')]: AccountType.Escrow,
 }
 
 export const ACCOUNTS_DATA_LAYOUT: Record<AccountType, any> = {

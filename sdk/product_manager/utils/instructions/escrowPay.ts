@@ -82,7 +82,7 @@ export const escrowPayInstructionDiscriminator = [
 export function createEscrowPayInstruction(
   accounts: EscrowPayInstructionAccounts,
   args: EscrowPayInstructionArgs,
-  programId = new web3.PublicKey('ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU')
+  programId = new web3.PublicKey('6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa')
 ) {
   const [data] = escrowPayStruct.serialize({
     instructionDiscriminator: escrowPayInstructionDiscriminator,

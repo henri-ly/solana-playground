@@ -59,7 +59,7 @@ export const denyInstructionDiscriminator = [240, 174, 253, 161, 88, 12, 17, 41]
  */
 export function createDenyInstruction(
   accounts: DenyInstructionAccounts,
-  programId = new web3.PublicKey('ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU')
+  programId = new web3.PublicKey('6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa')
 ) {
   const [data] = denyStruct.serialize({
     instructionDiscriminator: denyInstructionDiscriminator,

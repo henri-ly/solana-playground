@@ -6,15 +6,14 @@ import {
 import {
   UpdateTreeInstructionAccounts,
   createUpdateTreeInstruction,
+  UpdateTreeInstructionArgs,
 } from '../utils/instructions/updateTree'
-import { UpdateProductTreeParams } from '../utils/types'
 
 export async function createUpdateTreeTransaction(
   connection: Connection,
   accounts: UpdateTreeInstructionAccounts,
-  params: UpdateProductTreeParams,
+  args: UpdateTreeInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const args = { params }
   const ix = createUpdateTreeInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({

@@ -6,14 +6,15 @@ import {
 import {
   RegisterBuyFungibleInstructionAccounts,
   createRegisterBuyFungibleInstruction,
+  RegisterBuyFungibleInstructionArgs,
 } from '../utils/instructions/registerBuyFungible'
 
 export async function createRegisterBuyFungibleTransaction(
   connection: Connection,
   accounts: RegisterBuyFungibleInstructionAccounts,
-  amount: number,
+  args: RegisterBuyFungibleInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const ix = createRegisterBuyFungibleInstruction(accounts, { amount })
+  const ix = createRegisterBuyFungibleInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({
     payerKey: accounts.signer,

@@ -191,7 +191,6 @@ function processInstructionArgument(arg: IdlInstructionArg) {
     if (isIdlTypeDefined(arg.type)) {
         return `${arg.name}: ${arg.type.defined}`
     } else {
-        console.log(arg)
         const tsType = `${arg.name}: ${typeMappings[arg.type.toString()] || 'any'}`;
         return tsType;
     }

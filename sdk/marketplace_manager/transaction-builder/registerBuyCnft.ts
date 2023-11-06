@@ -6,15 +6,14 @@ import {
 import {
   RegisterBuyCnftInstructionAccounts,
   createRegisterBuyCnftInstruction,
+  RegisterBuyCnftInstructionArgs,
 } from '../utils/instructions/registerBuyCnft'
-import { RegisterBuyCnftParams } from '../utils/types'
 
 export async function createRegisterBuyCnftTransaction(
   connection: Connection,
   accounts: RegisterBuyCnftInstructionAccounts,
-  params: RegisterBuyCnftParams,
+  args: RegisterBuyCnftInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const args = { params }
   const ix = createRegisterBuyCnftInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({

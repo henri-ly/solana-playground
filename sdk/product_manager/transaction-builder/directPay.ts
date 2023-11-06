@@ -6,16 +6,15 @@ import {
 import {
   DirectPayInstructionAccounts,
   createDirectPayInstruction,
+  DirectPayInstructionArgs,
 } from '../utils/instructions/directPay'
-
-import BN from 'bn.js'
 
 export async function createDirectPayTransaction(
   connection: Connection,
   accounts: DirectPayInstructionAccounts,
-  productAmount: BN,
+  args: DirectPayInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const ix = createDirectPayInstruction(accounts, { productAmount })
+  const ix = createDirectPayInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({
     payerKey: accounts.signer,

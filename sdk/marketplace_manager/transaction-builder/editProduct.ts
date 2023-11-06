@@ -6,16 +6,15 @@ import {
 import {
   EditProductInstructionAccounts,
   createEditProductInstruction,
+  EditProductInstructionArgs,
 } from '../utils/instructions/editProduct'
-
-import BN from 'bn.js'
 
 export async function createEditProductTransaction(
   connection: Connection,
   accounts: EditProductInstructionAccounts,
-  productPrice: BN,
+  args: EditProductInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const ix = createEditProductInstruction(accounts, { productPrice })
+  const ix = createEditProductInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({
     payerKey: accounts.signer,

@@ -54,7 +54,10 @@ export const directPayAccounts = [
   'from',
   'to',
   'paymentMint',
+  'rent',
   'tokenProgram',
+  'associatedTokenProgram',
+  'systemProgram',
 ]
 export const acceptAccounts = [
   'signer',

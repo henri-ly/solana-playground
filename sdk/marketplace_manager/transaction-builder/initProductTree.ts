@@ -6,15 +6,14 @@ import {
 import {
   InitProductTreeInstructionAccounts,
   createInitProductTreeInstruction,
+  InitProductTreeInstructionArgs,
 } from '../utils/instructions/initProductTree'
-import { InitProductTreeParams } from '../utils/types'
 
 export async function createInitProductTreeTransaction(
   connection: Connection,
   accounts: InitProductTreeInstructionAccounts,
-  params: InitProductTreeParams,
+  args: InitProductTreeInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const args = { params }
   const ix = createInitProductTreeInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({

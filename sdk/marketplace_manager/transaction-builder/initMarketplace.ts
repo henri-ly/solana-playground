@@ -6,15 +6,14 @@ import {
 import {
   InitMarketplaceInstructionAccounts,
   createInitMarketplaceInstruction,
+  InitMarketplaceInstructionArgs,
 } from '../utils/instructions/initMarketplace'
-import { InitMarketplaceParams } from '../utils/types'
 
 export async function createInitMarketplaceTransaction(
   connection: Connection,
   accounts: InitMarketplaceInstructionAccounts,
-  params: InitMarketplaceParams,
+  args: InitMarketplaceInstructionArgs,
 ): Promise<VersionedTransaction> {
-  const args = { params }
   const ix = createInitMarketplaceInstruction(accounts, args)
   let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
   const messageV0 = new TransactionMessage({

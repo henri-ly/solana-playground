@@ -151,7 +151,22 @@
           "isSigner": false
         },
         {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
           "isMut": false,
           "isSigner": false
         }
@@ -646,6 +661,6 @@
     }
   ],
   "metadata": {
-    "address": "ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU"
+    "address": "6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa"
   }
 }

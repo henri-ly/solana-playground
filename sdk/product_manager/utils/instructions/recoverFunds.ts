@@ -61,7 +61,7 @@ export const recoverFundsInstructionDiscriminator = [
  */
 export function createRecoverFundsInstruction(
   accounts: RecoverFundsInstructionAccounts,
-  programId = new web3.PublicKey('ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU')
+  programId = new web3.PublicKey('6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa')
 ) {
   const [data] = recoverFundsStruct.serialize({
     instructionDiscriminator: recoverFundsInstructionDiscriminator,

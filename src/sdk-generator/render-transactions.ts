@@ -28,24 +28,20 @@ export const ${NaMe}TransactionBuilder = {
 
 function renderInstruction(instruction: IdlInstruction): [string, string] {
     const instructionName = instruction.name.charAt(0).toUpperCase() + instruction.name.slice(1);
-    const instructionArgs = instruction.args.map(arg => {
-        const argType = mapType(arg.type);
-        return `${arg.name}: ${argType}`;
-    }).join(', ');
+    const instructionArgs = instruction.args.length > 0 ?  `args: ${instructionName}InstructionArgs` : '';
 
     const importedArgs = instruction.args
         .filter(arg => isIdlTypeDefined(arg.type))
         .map((arg) => (arg.type as IdlTypeDefined).defined);
 
     const isImported = importedArgs[0] === instructionArgs.split(': ')[1]
-    const args = instruction.args.length > 0 ? `, ${isImported ? `args` : `{${instructionArgs.split(':')[0]}}`}` : '';
+    const args = instruction.args.length > 0 ? `, args` : '';
 
     const content = `import { Connection, TransactionMessage, VersionedTransaction } from "@solana/web3.js";
-    import { ${instructionName}InstructionAccounts, create${instructionName}Instruction } from "../utils/instructions/${instruction.name}";
+    import { ${instructionName}InstructionAccounts, create${instructionName}Instruction, ${instructionArgs ? instructionArgs.split(': ')[1] : ''} } from "../utils/instructions/${instruction.name}";
     ${instruction.args.length > 0 ? isImported ? `import {
         ${importedArgs}
     } from '../utils/types';` : '' : ''}
-    ${containsBN(instruction)}
 
     export async function create${instructionName}Transaction(
         connection: Connection, 

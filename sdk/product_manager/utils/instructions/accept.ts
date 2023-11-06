@@ -59,7 +59,7 @@ export const acceptInstructionDiscriminator = [65, 150, 70, 216, 133, 6, 107, 4]
  */
 export function createAcceptInstruction(
   accounts: AcceptInstructionAccounts,
-  programId = new web3.PublicKey('ESb8CKVxVNpDS3c1fsrWwmMkfKga7Z9pdAdbKU5Lv3VU')
+  programId = new web3.PublicKey('6NSfzFwHeuDCLzFwAo3yQ2KLLb9bThvkEVyeWChoAqBa')
 ) {
   const [data] = acceptStruct.serialize({
     instructionDiscriminator: acceptInstructionDiscriminator,

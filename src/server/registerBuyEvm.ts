@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import { ethers } from "ethers";
 import axios from "axios";
-import { ethereumNetworkConfig } from '../evmConfig.js';
 
 dotenv.config();
 
@@ -28,16 +27,12 @@ export async function testEvmEndpoints() {
         });
         const transactionData = JSON.parse(response.data.transaction);
         const tx = {
-            to: transactionData.plain.recipients[0],
-            value: ethers.utils.parseUnits(transactionData.plain.amount, 'wei'),
-            gasLimit: ethers.BigNumber.from(transactionData.plain.gas),
+            to: transactionData.encoded.to,
+            value: transactionData.encoded.value,
             nonce: ethers.BigNumber.from(transactionData.plain.nonce),
-            chainId: ethereumNetworkConfig[blockchain],
-            data: transactionData.plain.data || '0x',
+            chainId: 43114,
         };
-        console.log(config)
         const signature = await wallet.signTransaction(tx);
-
         const sendTransactionParams = {
             blockchain,
             datasetId,
@@ -45,8 +40,6 @@ export async function testEvmEndpoints() {
             encodedTransaction: JSON.stringify(transactionData.encoded),
             signature,
         };
-        console.log(sendTransactionParams)
-
         const sendResponse = await axios.post('http://127.0.0.1:3001/evm/sendTransaction', sendTransactionParams, {
             headers: {
                 'Content-Type': 'application/json',

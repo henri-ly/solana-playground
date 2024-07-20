@@ -35,16 +35,17 @@ export async function testEvmEndpoints() {
             chainId: ethereumNetworkConfig[blockchain],
             data: transactionData.plain.data || '0x',
         };
-        console.log(tx.gasLimit)
+        console.log(config)
         const signature = await wallet.signTransaction(tx);
 
         const sendTransactionParams = {
             blockchain,
             datasetId,
             transaction: JSON.stringify(transactionData.plain),
-            encodedTransaction: signature,
+            encodedTransaction: JSON.stringify(transactionData.encoded),
             signature,
         };
+        console.log(sendTransactionParams)
 
         const sendResponse = await axios.post('http://127.0.0.1:3001/evm/sendTransaction', sendTransactionParams, {
             headers: {

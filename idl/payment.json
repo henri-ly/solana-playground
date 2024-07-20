@@ -1,0 +1,54 @@
+{
+  "version": "0.1.0",
+  "name": "payment",
+  "instructions": [
+    {
+      "name": "pay",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "buyerVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "index",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "decimals",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "address": "payrbiNjqzWNBC41QtE3iUF7UbMjNfekUQbZjaauhVC"
+  }
+}

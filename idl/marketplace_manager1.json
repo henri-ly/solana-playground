@@ -1,0 +1,872 @@
+{
+  "version": "0.1.0",
+  "name": "marketplace_manager",
+  "instructions": [
+    {
+      "name": "acceptAccess",
+      "docs": [
+        "airdrop a token that allows users to create products in a specific marketplace"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "requestor",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessRequest",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Enforcing token22 to make the access token non transferable"
+          ]
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "airdropAccess",
+      "docs": [
+        "airdrop a token that allows users to create products in a specific marketplace"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "receiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Enforcing token22 to make the access token non transferable"
+          ]
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "editMarketplace",
+      "docs": [
+        "marketplace authority can edit fees and rewards configs"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessMint",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "feesConfig",
+          "type": {
+            "option": {
+              "defined": "FeesConfig"
+            }
+          }
+        },
+        {
+          "name": "rewardsConfig",
+          "type": {
+            "option": {
+              "defined": "RewardsConfig"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "editProduct",
+      "docs": [
+        "seller can edit payment_mint and product_price"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "productPrice",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initBounty",
+      "docs": [
+        "marketplace auth can create multiple bounty vaults (different mints)"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rewardMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "bountyVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initMarketplace",
+      "docs": [
+        "marketplace initialization:",
+        "creates the access mint independently you want a permissionless marketplace or not"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "accessMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Enforcing token22 to make the access token non transferable"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "accessMintBump",
+          "type": "u8"
+        },
+        {
+          "name": "feesConfig",
+          "type": {
+            "option": {
+              "defined": "FeesConfig"
+            }
+          }
+        },
+        {
+          "name": "rewardsConfig",
+          "type": {
+            "option": {
+              "defined": "RewardsConfig"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initProduct",
+      "docs": [
+        "recommeded to read the Product state code to understand the meaning of this data structure"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "accessMint",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "accessVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "needs to be optional, permisionless marketplaces have to provide a null address"
+          ]
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        },
+        {
+          "name": "productPrice",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "registerBuy",
+      "docs": [
+        "manages the transfers (buyer -> seller and fees to marketplace authority)"
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "marketplace",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "product",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "paymentMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "buyerVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerVault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "marketplaceVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "ATA that receives fees, should be init before allowing sellers to receive payments with specific mints"
+          ]
+        },
+        {
+          "name": "bountyVault",
+          "isMut": true,
+          "isSigner": false,
+          "isOptional": true,
+          "docs": [
+            "Note: Reward Mint has to be equal to Payment Mint for decimals and amount consistency",
+            "if you are not going to use the reward feat provide bounty_vault as null",
+            "this account holds the reward tokens"
+          ]
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u32"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AccessRequest",
+      "docs": [
+        "This account represents a request to get the token neccessary to list products"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "docs": [
+              "The rent of this account will be resend to the payer when accepted"
+            ],
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Marketplace",
+      "docs": [
+        "This account represents a marketplace with associated transaction fees and reward configurations.",
+        "The account is controlled by an authority that can modify the fee and reward configurations."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "The authorized entity that can modify this account data."
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "bumps",
+            "docs": [
+              "Seed bump parameters used for deterministic address derivation."
+            ],
+            "type": {
+              "defined": "MarketplaceBumps"
+            }
+          },
+          {
+            "name": "accessMint",
+            "docs": [
+              "If enabled, sellers need at least one token of this mint to list a product in your marketplace."
+            ],
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "feesConfig",
+            "type": {
+              "option": {
+                "defined": "FeesConfig"
+              }
+            }
+          },
+          {
+            "name": "rewardsConfig",
+            "type": {
+              "option": {
+                "defined": "RewardsConfig"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Product",
+      "docs": [
+        "This account works as an product administrator"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Seller"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "marketplace",
+            "type": "publicKey"
+          },
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "sellerConfig",
+            "docs": [
+              "Seller-defined product configurations."
+            ],
+            "type": {
+              "defined": "SellerConfig"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "MarketplaceBumps",
+      "docs": [
+        "Bump seed parameters used for deterministic address derivation."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "accessMintBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeesConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee",
+            "docs": [
+              "The transaction fee percentage levied by the app or marketplace.",
+              "For example, a value of 250 corresponds to a fee of 2.5%."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "feePayer",
+            "docs": [
+              "The entity that pays the transaction fees (either the buyer or the seller)."
+            ],
+            "type": {
+              "defined": "PaymentFeePayer"
+            }
+          },
+          {
+            "name": "discountMint",
+            "docs": [
+              "This mint reduces the fee & can make the rewards to be enforced to a unique mint.",
+              "so you can incentive transactions with your own token"
+            ],
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "feeReduction",
+            "docs": [
+              "Fee reduction in absolute terms (ie fee 5% and reduction 2 value = total fee 3%)"
+            ],
+            "type": {
+              "option": "u16"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RewardsConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rewardMint",
+            "docs": [
+              "The marketplace will only give rewards if the payment is made with this specific mint."
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "sellerReward",
+            "docs": [
+              "The transaction volume percentage that the seller receives as a reward on a sale.",
+              "A value of 250 corresponds to a reward of 2.5% of the transaction volume.",
+              "A value of 0 indicates that there is no active rewards for the seller."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "buyerReward",
+            "docs": [
+              "The transaction volume percentage that the buyer receives as a reward on a sale."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellerConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "paymentMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "productPrice",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PaymentFeePayer",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Buyer"
+          },
+          {
+            "name": "Seller"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "BonusEvent",
+      "fields": [
+        {
+          "name": "receiver",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "CannotCloseProduct",
+      "msg": "There are still users with active payments"
+    },
+    {
+      "code": 6001,
+      "name": "StringTooLong",
+      "msg": "You are providing a string that is too long"
+    },
+    {
+      "code": 6002,
+      "name": "NumericalOverflow",
+      "msg": "Numerical Overflow happened"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidFeeValue",
+      "msg": "You are setting a higher fee value"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidFeeReductionValue",
+      "msg": "You are setting a higher fee reduction value"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidRewardValue",
+      "msg": "You are setting a higher reward value"
+    },
+    {
+      "code": 6006,
+      "name": "InconrrectAppAccount",
+      "msg": "You are providing a wrong app account"
+    },
+    {
+      "code": 6007,
+      "name": "InconrrectCreatorAccount",
+      "msg": "You are providing a wrong creator vault"
+    },
+    {
+      "code": 6008,
+      "name": "IncorrectPaymentMint",
+      "msg": "You are trying to pay a different mint than the one stated by the seller"
+    },
+    {
+      "code": 6009,
+      "name": "IncorrectATA",
+      "msg": "You are providing a wrong associated token account"
+    },
+    {
+      "code": 6010,
+      "name": "IncorrectAuthority",
+      "msg": "You are not the authority"
+    },
+    {
+      "code": 6011,
+      "name": "IncorrectMint",
+      "msg": "You are providing an incorrect mint"
+    },
+    {
+      "code": 6012,
+      "name": "IncorrectNonce",
+      "msg": "Given nonce is invalid"
+    },
+    {
+      "code": 6013,
+      "name": "IncorrectSeeds",
+      "msg": "Incorrect seeds"
+    },
+    {
+      "code": 6014,
+      "name": "IncorrectGovernanceName",
+      "msg": "You are not allowed to create a governance account"
+    },
+    {
+      "code": 6015,
+      "name": "IncorrectTokenProgram",
+      "msg": "You are providing a wrong token program"
+    },
+    {
+      "code": 6016,
+      "name": "IncorrectInstruction",
+      "msg": "You are trying to sign an incorrect instruction based on marketplace configuration"
+    },
+    {
+      "code": 6017,
+      "name": "ConversionError",
+      "msg": "Failed to convert data"
+    },
+    {
+      "code": 6018,
+      "name": "TransferError",
+      "msg": "Transfer error"
+    },
+    {
+      "code": 6019,
+      "name": "MintToError",
+      "msg": "Error during the mint_to CPI"
+    },
+    {
+      "code": 6020,
+      "name": "BurnError",
+      "msg": "Error during the burn CPI"
+    },
+    {
+      "code": 6021,
+      "name": "CloseAccountError",
+      "msg": "Error during the close account CPI"
+    },
+    {
+      "code": 6022,
+      "name": "ClosedPromotion",
+      "msg": "Currently we do not offer any promotion"
+    },
+    {
+      "code": 6023,
+      "name": "OpenPromotion",
+      "msg": "Currently you can not withdraw the bonus because the promotion has not finished"
+    },
+    {
+      "code": 6024,
+      "name": "ExtensionNotSupported",
+      "msg": "Currently this extension is not supported"
+    },
+    {
+      "code": 6025,
+      "name": "CreateAccountError",
+      "msg": "Error creating mint account"
+    },
+    {
+      "code": 6026,
+      "name": "MintExtensionError",
+      "msg": "Error extension init"
+    },
+    {
+      "code": 6027,
+      "name": "InitMintError",
+      "msg": "Error mint init"
+    },
+    {
+      "code": 6028,
+      "name": "OptionalAccountNotProvided",
+      "msg": "Optional account not provided"
+    },
+    {
+      "code": 6029,
+      "name": "NotAllowed",
+      "msg": "You dont have the token that allows you to create products"
+    }
+  ],
+  "metadata": {
+    "address": "7KES27SK4AdZCCVj7nWgf5rUBFgyDMNSHEwgu7tvbnZW"
+  }
+}

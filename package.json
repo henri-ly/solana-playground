@@ -29,12 +29,14 @@
     "@solana/spl-account-compression": "^0.2.0",
     "@solana/spl-token": "^0.3.8",
     "@solana/web3.js": "^1.87.2",
-    "aleph-sdk-ts": "^3.7.0",
+    "aleph-sdk-ts": "^3.9.2",
     "axios": "^1.5.1",
     "bn.js": "^5.2.1",
     "brick-protocol": "^0.0.24",
     "bs58": "^5.0.0",
     "dotenv": "^16.3.1",
+    "ethers": "^5.7.2",
+    "node-fetch": "^3.3.2",
     "prettier": "^3.0.3",
     "uuid": "^9.0.1"
   }
